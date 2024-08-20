@@ -8,8 +8,16 @@ import pandas as pd
 # --- Access the secret from environment variables ---
 json_key_str = st.secrets["GOOGLE_APPLICATION_CREDENTIALS"]["key"]
 
+# --- Fixing invalid control characters ---
+# Replace unescaped control characters in the string
+json_key_str = json_key_str.replace('\n', '\\n').replace('\t', '\\t')
+
 # --- Convert the string to a JSON object ---
-json_key = json.loads(json_key_str)
+try:
+    json_key = json.loads(json_key_str)
+except json.JSONDecodeError as e:
+    st.error(f"Failed to decode JSON: {e}")
+    st.stop()
 
 # --- App Title ---
 st.title("Google Search Indexing API App")
