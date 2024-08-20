@@ -1,18 +1,12 @@
 import streamlit as st
 from oauth2client.service_account import ServiceAccountCredentials
 from googleapiclient.discovery import build
-from googleapiclient.http import BatchHttpRequest
 import httplib2
 import json
-import os
 import pandas as pd
 
 # --- Access the secret from environment variables ---
-json_key_str = st.secrets["GOOGLE_APPLICATION_CREDENTIALS"] ["key"]
-
-# Access the secret stored in Streamlit Cloud
-#json_key = st.secrets["google_api"]
-
+json_key_str = st.secrets["GOOGLE_APPLICATION_CREDENTIALS"]["key"]
 
 # --- Convert the string to a JSON object ---
 json_key = json.loads(json_key_str)
@@ -23,6 +17,7 @@ st.title("Google Search Indexing API App")
 # --- File Upload ---
 uploaded_file = st.file_uploader("Upload URLs (TXT or CSV)", type=["txt", "csv"])
 
+urls = []
 if uploaded_file is not None:
     if uploaded_file.type == "text/plain":
         urls = uploaded_file.read().decode("utf-8").splitlines()
