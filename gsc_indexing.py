@@ -8,7 +8,11 @@ import os
 import pandas as pd
 
 # --- Access the secret from environment variables ---
-json_key_str = st.secrets["GOOGLE_APPLICATION_CREDENTIALS"] 
+json_key_str = st.secrets["GOOGLE_APPLICATION_CREDENTIALS"] ["key"]
+
+# Access the secret stored in Streamlit Cloud
+#json_key = st.secrets["google_api"]
+
 
 # --- Convert the string to a JSON object ---
 json_key = json.loads(json_key_str)
